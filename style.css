@@ -1,0 +1,1397 @@
+/* ==========================================
+   BASIC RESET
+========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    color: #403830;
+
+    background: #d7c5a8;
+}
+
+
+/* ==========================================
+   COVER
+========================================== */
+
+.cover-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            #eadfc9 0%,
+            #d2bea0 70%
+        );
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+.cover-screen.opened {
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+.cover-book {
+    width: min(84vw, 430px);
+
+    height: min(78vh, 620px);
+
+    padding: 10px;
+
+    background: #705544;
+
+    border-radius:
+        6px
+        12px
+        12px
+        6px;
+
+    box-shadow:
+        0 18px 35px
+        rgba(50, 35, 25, 0.28);
+}
+
+
+.cover-inner {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #f8f0e2;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
+
+    background:
+        rgba(255,255,255,0.04);
+}
+
+
+.cover-small {
+    font-size: 0.9rem;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+}
+
+
+.cover-book h1 {
+    margin: 18px 0;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(3.5rem, 13vw, 5.5rem);
+
+    font-weight: 500;
+}
+
+
+.cover-line {
+    width: 60px;
+
+    height: 1px;
+
+    margin-bottom: 20px;
+
+    background: #f8f0e2;
+
+    opacity: 0.6;
+}
+
+
+.cover-subtitle {
+    font-size: 1.05rem;
+
+    line-height: 1.5;
+
+    font-style: italic;
+}
+
+
+.open-button {
+    margin-top: 30px;
+
+    padding:
+        11px 22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.65);
+
+    background: transparent;
+
+    color: #f8f0e2;
+
+    font-family: inherit;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease;
+}
+
+.open-button:hover {
+    background:
+        rgba(255,255,255,0.12);
+}
+
+
+/* ==========================================
+   COVER DECORATIONS
+========================================== */
+
+.cover-decoration {
+    position: absolute;
+
+    color:
+        rgba(255,255,255,0.6);
+
+    font-size: 1.5rem;
+}
+
+
+/* ==========================================
+   ALBUM AREA
+========================================== */
+
+.album-container {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.7s ease;
+}
+
+.album-container.visible {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* ==========================================
+   BOOK
+========================================== */
+
+.album {
+    position: relative;
+
+    width: min(92vw, 520px);
+
+    height: min(88vh, 720px);
+
+    perspective: 1400px;
+}
+
+
+/* ==========================================
+   PAGES
+========================================== */
+
+.page {
+    position: absolute;
+
+    inset: 0;
+
+    padding:
+        28px 25px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(80,60,40,0.12);
+
+    box-shadow:
+        0 12px 25px
+        rgba(50,35,25,0.2);
+
+    transform-origin: left center;
+
+    backface-visibility: hidden;
+
+    transition:
+        transform 0.8s ease;
+
+    color: #403830;
+}
+
+
+/* ==========================================
+   PAGE PAPER TEXTURE
+========================================== */
+
+.page::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(120,90,50,0.05),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 80% 75%,
+            rgba(120,90,50,0.04),
+            transparent 25%
+        );
+}
+
+
+/* ==========================================
+   PAGE CONTENT
+========================================== */
+
+.page-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+.center-content {
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   PAGE NUMBER
+========================================== */
+
+.page-number {
+    align-self: flex-end;
+
+    margin-bottom: 8px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 0.15em;
+
+    opacity: 0.55;
+}
+
+
+/* ==========================================
+   HEADINGS
+========================================== */
+
+.eyebrow {
+    margin-bottom: 7px;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    opacity: 0.65;
+}
+
+
+.page h2 {
+    width: 100%;
+
+    margin-bottom: 12px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(1.45rem, 5vw, 2rem);
+
+    line-height: 1.18;
+
+    font-weight: 500;
+
+    text-align: center;
+}
+
+
+.small-divider {
+    width: 50px;
+
+    height: 1px;
+
+    margin:
+        5px auto 15px;
+
+    background: currentColor;
+
+    opacity: 0.4;
+}
+
+
+/* ==========================================
+   NOTES
+========================================== */
+
+.main-note,
+.page-note {
+    width: 100%;
+
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    font-size:
+        clamp(0.88rem, 3.2vw, 1.05rem);
+
+    line-height: 1.35;
+
+    text-align: center;
+}
+
+
+.page-note {
+    max-width: 400px;
+}
+
+
+.page-note strong {
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-weight: 600;
+}
+
+
+.handwritten {
+    margin-top: 15px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.15rem;
+
+    font-style: italic;
+
+    color: inherit;
+}
+
+
+.signature {
+    margin-top: 16px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 1.15rem;
+
+    font-weight: 500;
+}
+
+
+/* ==========================================
+   CLOSING PAGE
+========================================== */
+
+.closing-page {
+    background: #eee2ca !important;
+}
+
+
+.closing-symbol {
+    margin-bottom: 10px;
+
+    font-size: 1.6rem;
+
+    opacity: 0.65;
+      }
+/* ==========================================
+   PHOTO AREA
+========================================== */
+
+.photo-grid {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+
+.photo-grid.two {
+    min-height: 38%;
+
+    padding-bottom: 5px;
+}
+
+
+.photo-grid.single-photo {
+    height: 48%;
+
+    margin-top: 12px;
+}
+
+
+/* ==========================================
+   POLAROID / INSTAX STYLE
+========================================== */
+
+.polaroid {
+    width: 42%;
+
+    padding: 7px 7px 24px;
+
+    background: #fffdf8;
+
+    box-shadow:
+        0 7px 15px
+        rgba(50,35,25,0.20);
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.polaroid:hover {
+    transform:
+        rotate(0deg)
+        translateY(-3px);
+}
+
+
+.polaroid img {
+    display: block;
+
+    width: 100%;
+
+    height: 145px;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    background: #e5ddd0;
+}
+
+
+.large-photo {
+    width: 58%;
+
+    max-width: 270px;
+}
+
+
+.large-photo img {
+    height: 230px;
+
+    object-fit: contain;
+
+    background: #eee8dc;
+}
+
+
+/* ==========================================
+   PHOTO ROTATIONS
+========================================== */
+
+.rotate-left {
+    transform: rotate(-2.5deg);
+}
+
+
+.rotate-right {
+    transform: rotate(2.5deg);
+}
+
+
+/* ==========================================
+   PAGE COLOURS
+========================================== */
+
+.page:nth-child(1) {
+    background: #f3ead8;
+}
+
+.page:nth-child(2) {
+    background: #e7edf0;
+}
+
+.page:nth-child(3) {
+    background: #eee8dc;
+}
+
+.page:nth-child(4) {
+    background: #e6eee5;
+}
+
+.page:nth-child(5) {
+    background: #f3e5df;
+}
+
+.page:nth-child(6) {
+    background: #e8e2ef;
+}
+
+.page:nth-child(7) {
+    background: #f1e7d5;
+}
+
+.page:nth-child(8) {
+    background: #e2ece9;
+}
+
+.page:nth-child(9) {
+    background: #f0e4d6;
+}
+
+.page:nth-child(10) {
+    background: #e4e9df;
+}
+
+.page:nth-child(11) {
+    background: #ebe2eb;
+}
+
+.page:nth-child(12) {
+    background: #e8e7df;
+}
+
+.page:nth-child(13) {
+    background: #f2e1dc;
+}
+
+.page:nth-child(14) {
+    background: #e0e9ee;
+}
+
+.page:nth-child(15) {
+    background: #eee5d4;
+}
+
+.page:nth-child(16) {
+    background: #e4ebe2;
+}
+
+.page:nth-child(17) {
+    background: #ece3d9;
+}
+
+.page:nth-child(18) {
+    background: #e7e1ed;
+}
+
+.page:nth-child(19) {
+    background: #e3ece8;
+}
+
+.page:nth-child(20) {
+    background: #f1e5d8;
+}
+
+.page:nth-child(21) {
+    background: #e4e9ee;
+}
+
+.page:nth-child(22) {
+    background: #eee2d5;
+}
+
+.page:nth-child(23) {
+    background: #e6e9df;
+}
+
+.page:nth-child(24) {
+    background: #e9e1e8;
+}
+
+.page:nth-child(25) {
+    background: #eee2ca;
+}
+
+
+/* ==========================================
+   PAGE TURNING STATES
+========================================== */
+
+.page {
+    z-index: 25;
+}
+
+
+.page.turned {
+    transform:
+        rotateY(-180deg);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/*
+   Pages which have not yet been turned
+   stay above the pages behind them.
+*/
+
+.page:not(.turned) {
+    z-index: 25;
+}
+
+
+/* ==========================================
+   NAVIGATION BUTTONS
+========================================== */
+
+.nav-button {
+    position: fixed;
+
+    top: 50%;
+
+    z-index: 200;
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(70,52,40,0.72);
+
+    color: #fffaf1;
+
+    font-family: Georgia, serif;
+
+    font-size: 2rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform:
+        translateY(-50%);
+
+    transition:
+        opacity 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.nav-button:hover {
+    background:
+        rgba(70,52,40,0.9);
+}
+
+
+.nav-button.prev {
+    left: 10px;
+}
+
+
+.nav-button.next {
+    right: 10px;
+}
+
+
+.nav-button:disabled {
+    opacity: 0.25;
+
+    cursor: default;
+}
+
+
+/* ==========================================
+   PAGE INDICATOR
+========================================== */
+
+.page-indicator {
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 12px;
+
+    z-index: 200;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        4px 10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(70,52,40,0.55);
+
+    color: #fffaf1;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ==========================================
+   SWIPE HINT
+========================================== */
+
+.swipe-hint {
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 42px;
+
+    z-index: 200;
+
+    transform:
+        translateX(-50%);
+
+    color:
+        rgba(65,48,38,0.65);
+
+    font-size: 0.78rem;
+
+    letter-spacing: 0.08em;
+
+    text-align: center;
+
+    transition:
+        opacity 0.5s ease;
+}
+
+
+.swipe-hint.hidden {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   BUTTERFLIES
+========================================== */
+
+.butterflies {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 150;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+.butterfly {
+    position: absolute;
+
+    width: 22px;
+
+    height: 18px;
+
+    opacity: 0;
+
+    animation:
+        butterflyFloat
+        12s linear
+        infinite;
+}
+
+
+.butterfly i {
+    position: absolute;
+
+    left: 10px;
+
+    top: 5px;
+
+    width: 3px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #806c62;
+}
+
+
+.butterfly span {
+    position: absolute;
+
+    top: 1px;
+
+    width: 11px;
+
+    height: 14px;
+
+    border-radius:
+        70%
+        30%
+        60%
+        40%;
+
+    background:
+        rgba(145,120,110,0.55);
+}
+
+
+.butterfly span:first-of-type {
+    left: 0;
+
+    transform:
+        rotate(-25deg);
+}
+
+
+.butterfly span:last-of-type {
+    right: 0;
+
+    transform:
+        rotate(25deg);
+}
+
+
+.butterfly-one {
+    left: 8%;
+
+    bottom: -30px;
+
+    animation-delay: 1s;
+}
+
+
+.butterfly-two {
+    left: 55%;
+
+    bottom: -40px;
+
+    animation-delay: 5s;
+}
+
+
+.butterfly-three {
+    left: 78%;
+
+    bottom: -25px;
+
+    animation-delay: 8s;
+}
+
+
+@keyframes butterflyFloat {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate(0, 0)
+            rotate(-8deg);
+    }
+
+    10% {
+        opacity: 0.65;
+    }
+
+    50% {
+        transform:
+            translate(25px, -45vh)
+            rotate(8deg);
+    }
+
+    90% {
+        opacity: 0.55;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-20px, -100vh)
+            rotate(-5deg);
+    }
+}
+/* ==========================================
+   SMALL SCRAPBOOK DETAILS
+========================================== */
+
+.page::after {
+    content: "";
+
+    position: absolute;
+
+    width: 70px;
+
+    height: 18px;
+
+    top: 10px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        rotate(-2deg);
+
+    background:
+        rgba(255,255,255,0.22);
+
+    opacity: 0.7;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================
+   PHOTO PAPER EFFECT
+========================================== */
+
+.polaroid::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255,255,255,0.20),
+            transparent 45%
+        );
+}
+
+
+/* ==========================================
+   MOBILE PHONE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .album-container {
+        padding: 10px;
+    }
+
+
+    .album {
+        width: 94vw;
+
+        height: 87vh;
+    }
+
+
+    .page {
+        padding:
+            22px 18px;
+    }
+
+
+    .page h2 {
+        font-size:
+            clamp(1.25rem, 5.4vw, 1.7rem);
+
+        line-height: 1.16;
+
+        margin-bottom: 9px;
+    }
+
+
+    .main-note,
+    .page-note {
+        font-size:
+            clamp(0.80rem, 3.4vw, 0.98rem);
+
+        line-height: 1.28;
+    }
+
+
+    .photo-grid {
+        gap: 10px;
+
+        padding-top: 8px;
+    }
+
+
+    .photo-grid.two {
+        min-height: 34%;
+    }
+
+
+    .polaroid {
+        width: 44%;
+
+        padding:
+            5px 5px 18px;
+    }
+
+
+    .polaroid img {
+        height: 125px;
+    }
+
+
+    .large-photo {
+        width: 60%;
+
+        max-width: 250px;
+    }
+
+
+    .large-photo img {
+        height: 200px;
+
+        object-fit: contain;
+    }
+
+
+    .nav-button {
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 1.7rem;
+    }
+
+
+    .nav-button.prev {
+        left: 5px;
+    }
+
+
+    .nav-button.next {
+        right: 5px;
+    }
+
+
+    .page-indicator {
+        bottom: 8px;
+
+        font-size: 0.68rem;
+    }
+
+
+    .swipe-hint {
+        bottom: 35px;
+
+        font-size: 0.7rem;
+    }
+
+
+    .cover-book {
+        width: 84vw;
+
+        height: 76vh;
+    }
+
+
+    .cover-inner {
+        padding: 20px;
+    }
+
+
+    .cover-book h1 {
+        font-size:
+            clamp(3rem, 14vw, 4.5rem);
+    }
+
+
+    .cover-subtitle {
+        font-size: 0.95rem;
+    }
+
+
+    .open-button {
+        margin-top: 24px;
+
+        padding:
+            10px 18px;
+    }
+}
+
+
+/* ==========================================
+   VERY SMALL PHONES
+========================================== */
+
+@media (max-height: 650px) {
+
+    .album {
+        height: 84vh;
+    }
+
+
+    .page {
+        padding:
+            16px 17px;
+    }
+
+
+    .page h2 {
+        font-size: 1.25rem;
+
+        margin-bottom: 6px;
+    }
+
+
+    .main-note,
+    .page-note {
+        font-size: 0.78rem;
+
+        line-height: 1.22;
+    }
+
+
+    .photo-grid {
+        padding-top: 5px;
+    }
+
+
+    .polaroid img {
+        height: 105px;
+    }
+
+
+    .large-photo img {
+        height: 170px;
+    }
+}
+
+
+/* ==========================================
+   LANDSCAPE PHONE
+========================================== */
+
+@media (
+    max-height: 500px
+) and (
+    orientation: landscape
+) {
+
+    .album {
+        width: 65vw;
+
+        height: 90vh;
+    }
+
+
+    .page {
+        padding:
+            14px 20px;
+    }
+
+
+    .page h2 {
+        font-size: 1.25rem;
+    }
+
+
+    .main-note,
+    .page-note {
+        font-size: 0.78rem;
+
+        line-height: 1.2;
+    }
+
+
+    .polaroid img {
+        height: 95px;
+    }
+}
+
+
+/* ==========================================
+   REDUCE ANIMATION FOR DEVICES
+   THAT PREFER LESS MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* ==========================================
+   PREVENT TEXT SELECTION WHILE SWIPING
+========================================== */
+
+.album,
+.nav-button,
+.cover-screen {
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    -webkit-touch-callout: none;
+}
+
+
+/* ==========================================
+   IMAGE DRAG FIX
+========================================== */
+
+img {
+    -webkit-user-drag: none;
+
+    user-select: none;
+}
+
+
+/* ==========================================
+   HIDE SCROLLBARS
+========================================== */
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ==========================================
+   FINAL PAGE
+========================================== */
+
+.closing-page h2 {
+    margin-bottom: 8px;
+}
+
+
+.closing-page .page-note {
+    max-width: 390px;
+}
+
+
+.closing-page .handwritten {
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-style: italic;
+
+    font-weight: 500;
+}
+
+
+/* ==========================================
+   END
+========================================== */
